@@ -4,8 +4,7 @@
 # For license see LICENSE
 from tkinter import *
 from tkinter import ttk
-import ctypes
-ctypes.windll.user32.SetProcessDPIAware()
+
 class ScrollableNotebook(ttk.Frame):
     def __init__(self,parent,*args):
         ttk.Frame.__init__(self, parent, *args)
