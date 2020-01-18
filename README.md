@@ -6,7 +6,8 @@
 - [ ] All Tkinter's Notebook attributes will be inherited.
 
 **Installation**
-- Just download ScrollableNotebook.py and import it. 
+- Just download ScrollableNotebook.py and import it:
+
         from ScrollableNotebook import *
 
 **Screenshot:**
