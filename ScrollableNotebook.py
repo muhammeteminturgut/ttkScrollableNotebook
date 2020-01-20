@@ -8,7 +8,6 @@ from tkinter import ttk
 class ScrollableNotebook(ttk.Frame):
     def __init__(self,parent,*args):
         ttk.Frame.__init__(self, parent, *args)
-        self.firstAdd=0
         self.xLocation = 0
         self.notebookContent = ttk.Notebook(self)
         self.notebookContent.pack(fill="both", expand=True)
@@ -44,9 +43,8 @@ class ScrollableNotebook(ttk.Frame):
         self.xLocation = 0
 
     def add(self,frame,state="normal",padding=0, text="",image=False,compound="left",underline=-1):
-        if self.firstAdd!=0:
+        if len(self.notebookTab.winfo_children())!=0:
             self.notebookContent.add(frame, text="",state="hidden")
         else:
             self.notebookContent.add(frame, text="")
         self.notebookTab.add(ttk.Frame(self.notebookTab),state=state, padding=padding, text=text, image=image, compound=compound, underline=underline)
-
