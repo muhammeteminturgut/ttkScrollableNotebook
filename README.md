@@ -1,5 +1,5 @@
-# ttkScrollableNotebook - Horizontal Scrolable Tabs For Notebook Widget
-- Scrollable Notebook Tabs for Tkinter
+# ttkScrollableNotebook
+- Horizontal Scrollable Tabs For Tkinter's Notebook Widget
 
 **TODOS**
 - [x] Support for ttkthemes.
