@@ -1,9 +1,9 @@
 # ttkScrollableNotebook
 - Horizontal Scrollable Tabs For Tkinter's Notebook Widget
 
-**TODOS**
+~**TODOS**~
 - [x] Support for ttkthemes.
-- [ ] All Tkinter's Notebook attributes will be inherited.
+- [x] All Tkinter's Notebook attributes will be inherited.
 
 **Installation**
 - Just download ScrollableNotebook.py and import it:
