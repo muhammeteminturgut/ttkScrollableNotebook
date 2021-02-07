@@ -37,17 +37,13 @@ class ScrollableNotebook(ttk.Frame):
             self._rightSlide(event)
 
     def _bottomMenu(self,event):
-        def selectMenu(callback):
-            print(callback)
-            self.select(callback)
-        
-        m = Menu(self, tearoff = 0)
-        for i in self.notebookTab.tabs():
-            m.add_command(label=self.notebookTab.tab(i, option="text"),command= lambda j=i: self.select(j))
+        tabListMenu = Menu(self, tearoff = 0)
+        for tab in self.notebookTab.tabs():
+            tabListMenu.add_command(label=self.notebookTab.tab(tab, option="text"),command= lambda temp=tab: self.select(temp))
         try: 
-            m.tk_popup(event.x_root, event.y_root) 
+            tabListMenu.tk_popup(event.x_root, event.y_root) 
         finally: 
-            m.grab_release()
+            tabListMenu.grab_release()
 
     def _tabChanger(self,event):
         try: self.notebookContent.select(self.notebookTab.index("current"))
