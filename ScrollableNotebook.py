@@ -21,13 +21,13 @@ class ScrollableNotebook(ttk.Frame):
             self.menuSpace=50
             bottomTab = ttk.Label(slideFrame, text="\u2630")
             bottomTab.bind("<1>",self._bottomMenu)
-            bottomTab.pack(side=RIGHT, fill=BOTH, expand=True)
+            bottomTab.pack(side=RIGHT)
         leftArrow = ttk.Label(slideFrame, text=" \u276E")
         leftArrow.bind("<1>",self._leftSlide)
-        leftArrow.pack(side=LEFT, fill=BOTH, expand=True)
+        leftArrow.pack(side=LEFT)
         rightArrow = ttk.Label(slideFrame, text=" \u276F")
         rightArrow.bind("<1>",self._rightSlide)
-        rightArrow.pack(side=RIGHT, fill=BOTH, expand=True)
+        rightArrow.pack(side=RIGHT)
         self.notebookContent.bind("<Configure>", self._resetSlide)
         self.contentsManaged = []
 
