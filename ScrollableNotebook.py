@@ -19,16 +19,17 @@ class ScrollableNotebook(ttk.Frame):
         self.menuSpace=30
         if tabmenu==True:
             self.menuSpace=50
-            bottomTab = ttk.Label(slideFrame, text=" \u2630 ")
+            bottomTab = ttk.Label(slideFrame, text="\u2630")
             bottomTab.bind("<1>",self._bottomMenu)
-            bottomTab.pack(side=RIGHT)
+            bottomTab.pack(side=RIGHT, fill=BOTH, expand=True)
         leftArrow = ttk.Label(slideFrame, text=" \u276E")
         leftArrow.bind("<1>",self._leftSlide)
-        leftArrow.pack(side=LEFT)
+        leftArrow.pack(side=LEFT, fill=BOTH, expand=True)
         rightArrow = ttk.Label(slideFrame, text=" \u276F")
         rightArrow.bind("<1>",self._rightSlide)
-        rightArrow.pack(side=RIGHT)
+        rightArrow.pack(side=RIGHT, fill=BOTH, expand=True)
         self.notebookContent.bind("<Configure>", self._resetSlide)
+        self.contentsManaged = []
 
     def _wheelscroll(self, event):
         if event.delta > 0:
@@ -69,10 +70,14 @@ class ScrollableNotebook(ttk.Frame):
         else:
             self.notebookContent.add(frame, text="")
         self.notebookTab.add(ttk.Frame(self.notebookTab),**kwargs)
+        self.contentsManaged.append(frame)
 
     def forget(self,tab_id):
+        index = self.notebookTab.index(tab_id)
         self.notebookContent.forget(self.__ContentTabID(tab_id))
         self.notebookTab.forget(tab_id)
+        self.contentsManaged[index].destroy()
+        self.contentsManaged.pop(index)
 
     def hide(self,tab_id):
         self.notebookContent.hide(self.__ContentTabID(tab_id))

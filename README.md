@@ -27,6 +27,7 @@
 Thanks
 ----
 @pedroluisneves
+@Moosems
 
 License
 ----
