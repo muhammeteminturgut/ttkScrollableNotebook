@@ -20,13 +20,15 @@ class ScrollableNotebook(ttk.Frame):
         if tabmenu==True:
             self.menuSpace=50
             bottomTab = ttk.Label(slideFrame, text="\u2630")
-            bottomTab.bind("<1>",self._bottomMenu)
+            bottomTab.bind("<ButtonPress-1>",self._bottomMenu)
             bottomTab.pack(side=RIGHT)
         leftArrow = ttk.Label(slideFrame, text=" \u276E")
-        leftArrow.bind("<1>",self._leftSlide)
+        leftArrow.bind("<ButtonPress-1>",self._leftSlideStart)
+        leftArrow.bind("<ButtonRelease-1>",self._slideStop)
         leftArrow.pack(side=LEFT)
         rightArrow = ttk.Label(slideFrame, text=" \u276F")
-        rightArrow.bind("<1>",self._rightSlide)
+        rightArrow.bind("<ButtonPress-1>",self._rightSlideStart)
+        rightArrow.bind("<ButtonRelease-1>",self._slideStop)
         rightArrow.pack(side=RIGHT)
         self.notebookContent.bind("<Configure>", self._resetSlide)
         self.contentsManaged = []
@@ -37,28 +39,46 @@ class ScrollableNotebook(ttk.Frame):
         else:
             self._rightSlide(event)
 
-    def _bottomMenu(self,event):
+    def _bottomMenu(self, event):
         tabListMenu = Menu(self, tearoff = 0)
         for tab in self.notebookTab.tabs():
             tabListMenu.add_command(label=self.notebookTab.tab(tab, option="text"),command= lambda temp=tab: self.select(temp))
-        try: 
-            tabListMenu.tk_popup(event.x_root, event.y_root) 
-        finally: 
+        try:
+            tabListMenu.tk_popup(event.x_root, event.y_root)
+        finally:
             tabListMenu.grab_release()
 
-    def _tabChanger(self,event):
+    def _tabChanger(self, event):
         try: self.notebookContent.select(self.notebookTab.index("current"))
         except: pass
 
-    def _rightSlide(self,event):
+    def _rightSlideStart(self, event=None):
+        if self._rightSlide(event):
+            self.timer = self.after(100, self._rightSlideStart)
+
+    def _rightSlide(self, event):
         if self.notebookTab.winfo_width()>self.notebookContent.winfo_width()-self.menuSpace:
             if (self.notebookContent.winfo_width()-(self.notebookTab.winfo_width()+self.notebookTab.winfo_x()))<=self.menuSpace+5:
                 self.xLocation-=20
                 self.notebookTab.place(x=self.xLocation,y=0)
-    def _leftSlide(self,event):
+                return True
+        return False
+
+    def _leftSlideStart(self, event=None):
+        if self._leftSlide(event):
+            self.timer = self.after(100, self._leftSlideStart)
+
+    def _leftSlide(self, event):
         if not self.notebookTab.winfo_x()== 0:
             self.xLocation+=20
             self.notebookTab.place(x=self.xLocation,y=0)
+            return True
+        return False
+
+    def _slideStop(self, event):
+        if self.timer != None:
+            self.after_cancel(self.timer)
+            self.timer = None
 
     def _resetSlide(self,event=None):
         self.notebookTab.place(x=0,y=0)
