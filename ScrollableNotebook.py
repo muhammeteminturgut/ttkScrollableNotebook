@@ -9,6 +9,7 @@ class ScrollableNotebook(ttk.Frame):
     def __init__(self,parent,wheelscroll=False,tabmenu=False,*args,**kwargs):
         ttk.Frame.__init__(self, parent, *args)
         self.xLocation = 0
+        self.timer = None
         self.notebookContent = ttk.Notebook(self,**kwargs)
         self.notebookContent.pack(fill="both", expand=True)
         self.notebookTab = ttk.Notebook(self,**kwargs)
